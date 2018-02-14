@@ -25,9 +25,9 @@ namespace athome {
         }
 
         AVRSimulator::~AVRSimulator() {
-            if (_avr != nullptr) {
-                delete _avr;
-            }
+            _deinit_uart();
+            _deinit_firmware();
+            _deinit_avr();
         }
 
         void AVRSimulator::init() {
@@ -45,7 +45,7 @@ namespace athome {
         }
 
         void AVRSimulator::_init_avr() {
-            _avr = avr_make_mcu_by_name(_mcuName);
+            _avr = avr_make_mcu_by_name(_mcuName.c_str());
             if (_avr == nullptr) {
                 throw std::runtime_error("Unable to allocate AVR mcu");
             }
@@ -58,7 +58,7 @@ namespace athome {
             uint32_t    base, size;
             uint8_t     *firmware;
 
-            firmware = read_ihex_file(_firmwarePath, &size, &base);
+            firmware = read_ihex_file(_firmwarePath.c_str(), &size, &base);
             if (firmware == nullptr) {
                 throw std::runtime_error("Unable to load firmware");
             }
@@ -74,6 +74,16 @@ namespace athome {
             }
             uart_pty_init(_avr, &_uart_pty);
             uart_pty_connect(&_uart_pty, '0' + _instancesCount);
+        }
+
+        void AVRSimulator::_deinit_avr() {
+            if (_avr != nullptr) {
+                delete _avr;
+            }
+        }
+
+        void AVRSimulator::_deinit_uart() {
+            uart_pty_stop(&_uart_pty);
         }
 
         size_t AVRSimulator::_instancesCount = 0;

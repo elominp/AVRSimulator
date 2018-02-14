@@ -1,30 +1,30 @@
-CXX		= g++
+CXX		    = g++
 
 SRCS 		= main.cpp \
-	  	  AVRSimulator.cpp
+	  	      AVRSimulator.cpp
 
 CXX_OBJS 	= $(SRCS:.cpp=.o)
 
-CXXFLAGS	= -std=gnu++14 -I../simavr/simavr/sim -I../simavr/simavr/sim/avr -I../simavr/examples/parts -I../simavr/examples/shared
+CXXFLAGS	+= -std=gnu++14
 
-LDFLAGS 	= -lsimavr -lsimavrparts -lpthread -lelf -lGL -lGLU -lglut -lutil
+LDFLAGS 	= -lsimavrparts -lsimavr -lpthread -lelf -lGL -lGLU -lglut -lutil
 
-RM		= rm -r
+RM		    = rm -r
 
 BIN 		= simulator
 
-all:	$(BIN)
+all:	    $(BIN)
 
-$(BIN):	$(CXX_OBJS)
-	$(CXX) $(OBJS) $(LDFLAGS) -o $(BIN)
+$(BIN):	    $(CXX_OBJS)
+	        $(CXX) $(CXX_OBJS) $(LDFLAGS) -o $(BIN)
 
 clean:
-	$(RM) $(OBJS)
+	        $(RM) $(CXX_OBJS)
 
-fclean:	clean
-	$(RM) $(BIN)
+fclean:	    clean
+	        $(RM) $(BIN)
 
-re:	fclean all
+re:	        fclean all
 
-.PHONY:	all clean fclean re
+.PHONY:	    all clean fclean re
 

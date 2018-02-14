@@ -11,10 +11,10 @@
 # include <sim_avr.h>
 # include <sim_hex.h>
 # include <sim_gdb.h>
-# include <uart_pty.h>
 # include <iostream>
 # include <cstdint>
 # include <cstddef>
+# include "uart_pty.h"
 
 # ifndef DEFAULT_MCU
 #  define DEFAULT_MCU   ("atmega328p")
@@ -43,6 +43,10 @@ namespace athome {
             virtual void _init_avr();
             virtual void _init_firmware();
             virtual void _init_uart();
+
+            virtual void _deinit_avr();
+            virtual void _deinit_firmware() {};
+            virtual void _deinit_uart();
 
         private:
             std::string     _firmwarePath;
