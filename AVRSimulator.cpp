@@ -5,7 +5,7 @@
  *      Author: elominp
  */
 
-#include <stderr>
+#include <stdexcept>
 #include <cstring>
 #include <cstdlib>
 #include "AVRSimulator.h"
