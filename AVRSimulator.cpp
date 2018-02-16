@@ -33,6 +33,7 @@ namespace athome {
         void AVRSimulator::init() {
             _init_avr();
             _init_firmware();
+            _init_uart();
         }
 
         void AVRSimulator::run() {
@@ -50,8 +51,6 @@ namespace athome {
                 throw std::runtime_error("Unable to allocate AVR mcu");
             }
             avr_init(_avr);
-            _avr->frequency = _fCPU;
-            _avr->log = 1;
         }
 
         void AVRSimulator::_init_firmware() {
@@ -63,9 +62,11 @@ namespace athome {
                 throw std::runtime_error("Unable to load firmware");
             }
             memcpy(_avr->flash + base, firmware, size);
-            delete firmware;
+            free(firmware);
             _avr->pc = base;
             _avr->codeend = _avr->flashend;
+            _avr->frequency = _fCPU;
+            _avr->log = 1;
         }
 
         void AVRSimulator::_init_uart() {
@@ -73,12 +74,12 @@ namespace athome {
                 throw std::runtime_error("Unable to init simulator, maximum UART number exceeded");
             }
             uart_pty_init(_avr, &_uart_pty);
-            uart_pty_connect(&_uart_pty, '0' + _instancesCount);
+            uart_pty_connect(&_uart_pty, '0');
         }
 
         void AVRSimulator::_deinit_avr() {
             if (_avr != nullptr) {
-                delete _avr;
+                free(_avr);
             }
         }
 
