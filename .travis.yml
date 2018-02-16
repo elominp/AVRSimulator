@@ -2,15 +2,3 @@ language: c++
 install: sudo apt-get update && sudo apt-get install -y make git libelf-dev gcc-avr avr-libc freeglut3-dev elfutils libelf1 libglib2.0-dev gdb-avr
 sudo: enabled
 script: git clone https://github.com/buserror/simavr.git && cd ./simavr && make && sudo make install && sudo ldconfig && cd - && export CXXFLAGS="-I$PWD/simavr/simavr/cores -I$PWD/simavr/simavr/sim -I$PWD/simavr/examples/shared" && makedeploy:
-skip_cleanup: true
-before_deploy:
-  - git config --local user.name "Elominp"
-  - git config --local user.email "guillaume.pirou@epitech.eu"
-  - git tag "$(date + '%Y%m%d%H%M%S')-$(git log --format=%h -1)"
-deploy:
-  provider: releases
-  api_key: "52de9fad8f1ffcb042333a4ef181864f62a455fe"
-  file: "simulator"
-  skip_cleanup: true
-  on:
-    tags: true
