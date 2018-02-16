@@ -1,4 +1,4 @@
 language: c++
 install: sudo apt-get update && sudo apt-get install -y make git libelf-dev gcc-avr avr-libc freeglut3-dev elfutils libelf1 libglib2.0-dev gdb-avr
 sudo: enabled
-script: git clone https://github.com/buserror/simavr.git && cd ./simavr && make && sudo make install && sudo ldconfig && cd - && make
+script: git clone https://github.com/buserror/simavr.git && cd ./simavr && make && sudo make install && sudo ldconfig && export CXXFLAGS="-I$PWD/simavr/simavr/cores -I$PWD/simavr/simavr/sim -I$PWD/simavr/examples/shared" && cd - && make
