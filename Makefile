@@ -5,7 +5,7 @@ SRCS 		= main.cpp \
 
 CXX_OBJS 	= $(SRCS:.cpp=.o)
 
-CXXFLAGS	+= -std=gnu++14
+CXXFLAGS	+= -std=gnu++11
 
 LDFLAGS 	= -lsimavrparts -lsimavr -lpthread -lelf -lGL -lGLU -lglut -lutil
 
